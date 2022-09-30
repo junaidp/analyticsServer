@@ -1,0 +1,19 @@
+{
+  "Version": 1,
+  "Hash": "i2Jd4AQa8y/1CW4Inih3k5qsaaHdCADC7JpQ5H88yWg=",
+  "Source": "Analytics",
+  "BasePath": "_content/Analytics",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Analytics\\wwwroot",
+      "Source": "Analytics",
+      "ContentRoot": "C:\\Projects\\Analytics\\Analytics\\wwwroot\\",
+      "BasePath": "_content/Analytics",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": []
+}
