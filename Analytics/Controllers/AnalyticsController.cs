@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Abp.Collections.Extensions;
+using Abp.Linq.Extensions;
+using Analytics.viewModals;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
@@ -23,6 +26,16 @@ namespace Analytics.Controllers
         {
 
             return Ok(await _context.Analytics.ToListAsync());
+        }
+       
+        [HttpPost]
+        public async Task<ActionResult<List<AnalyticsModal>>> FilterData([FromForm] InputModal modal)
+        {
+            var result = await _context.Analytics
+                .WhereIf(modal.Id == 1, i => i.JcCode == null || String.IsNullOrEmpty(i.JcCode))
+            .ToListAsync();
+
+            return result;
         }
 
         [HttpGet("{id}")]
@@ -108,6 +121,8 @@ namespace Analytics.Controllers
                 throw ex;
             }
         }
+
+
 
         internal List<AnalyticsModal> SaveAnalytics(AnalyticsModal analytics)
         {
