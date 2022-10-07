@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Sayf/vYoSOZAWfUPijb098IypffdrvzH5QQ5/4d2A34=",
+  "Hash": "yJW2NuB5VqyjOcrvxfe2m4qG2yt6PLaMpziyVHyb7y4=",
   "Source": "Analytics",
   "BasePath": "_content/Analytics",
   "Mode": "Default",
@@ -10,7 +10,7 @@
     {
       "Name": "Analytics\\wwwroot",
       "Source": "Analytics",
-      "ContentRoot": "C:\\Projects\\analyticsServer\\Analytics\\wwwroot\\",
+      "ContentRoot": "C:\\Projects\\RealAnalyticsProject\\analyticsServer\\Analytics\\wwwroot\\",
       "BasePath": "_content/Analytics",
       "Pattern": "**"
     }

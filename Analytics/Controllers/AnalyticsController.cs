@@ -4,6 +4,7 @@ using Analytics.viewModals;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using System.Linq;
 
 namespace Analytics.Controllers
 {
@@ -27,15 +28,42 @@ namespace Analytics.Controllers
 
             return Ok(await _context.Analytics.ToListAsync());
         }
-       
         [HttpPost]
         public async Task<ActionResult<List<AnalyticsModal>>> FilterData([FromForm] InputModal modal)
         {
             var result = await _context.Analytics
                 .WhereIf(modal.Id == 1, i => i.JcCode == null || String.IsNullOrEmpty(i.JcCode))
             .ToListAsync();
+            // var jcCodes =new  List<AnalyticsModal>();
 
+            if (modal.Id == 2)
+            {
+                var jcCodes = result.GroupBy(element => element.JcCode)
+                  .Where(x => x.Count() > 1).SelectMany(g => g).ToList();
+                return jcCodes;
+            }
             return result;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<List<FilterMissingSequence>>> FilterMissingSequence([FromForm] InputModal modal)
+        {
+            var result = await _context.Analytics
+                .WhereIf(modal.Id == 1, i => i.JcCode == null || String.IsNullOrEmpty(i.JcCode))
+            .ToListAsync();
+            // var jcCodes =new  List<AnalyticsModal>();
+
+           
+            //else if (modal.Id == 3)  
+            //{
+            //    for (int i = 0; i <=  ; i++)
+            //    {
+
+            //    }
+
+            //}  
+
+            return null;
         }
 
         [HttpGet("{id}")]

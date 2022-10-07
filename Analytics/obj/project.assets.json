@@ -10013,11 +10013,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Projects\\analyticsServer\\Analytics\\Analytics.csproj",
+      "projectUniqueName": "C:\\Projects\\RealAnalyticsProject\\analyticsServer\\Analytics\\Analytics.csproj",
       "projectName": "Analytics",
-      "projectPath": "C:\\Projects\\analyticsServer\\Analytics\\Analytics.csproj",
+      "projectPath": "C:\\Projects\\RealAnalyticsProject\\analyticsServer\\Analytics\\Analytics.csproj",
       "packagesPath": "C:\\Users\\PC-1\\.nuget\\packages\\",
-      "outputPath": "C:\\Projects\\analyticsServer\\Analytics\\obj\\",
+      "outputPath": "C:\\Projects\\RealAnalyticsProject\\analyticsServer\\Analytics\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\PC-1\\AppData\\Roaming\\NuGet\\NuGet.Config",

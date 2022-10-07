@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LfA0ojrihqz/syDdk3QATt10CRyCb9n2pd8Eg29VzX4Qn90WVG/y0MD9U8zfmWRuknctOnAUDdtsAsyqP0DZZw==",
+  "dgSpecHash": "B9FK2Ov8RbIgLl6h6JoFxqghCYp/HY2ghqtnV1LtLMYVqMl9dV1nFk5O5vGSjx3IM83H3h8lm+5iCXubaXzk7Q==",
   "success": true,
-  "projectFilePath": "C:\\Projects\\analyticsServer\\Analytics\\Analytics.csproj",
+  "projectFilePath": "C:\\Projects\\RealAnalyticsProject\\analyticsServer\\Analytics\\Analytics.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PC-1\\.nuget\\packages\\abp\\7.3.0\\abp.7.3.0.nupkg.sha512",
     "C:\\Users\\PC-1\\.nuget\\packages\\castle.core\\4.4.1\\castle.core.4.4.1.nupkg.sha512",
