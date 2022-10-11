@@ -4,6 +4,7 @@ using Analytics.viewModals;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using System;
 using System.Linq;
 
 namespace Analytics.Controllers
@@ -28,6 +29,7 @@ namespace Analytics.Controllers
 
             return Ok(await _context.Analytics.ToListAsync());
         }
+
         [HttpPost]
         public async Task<ActionResult<List<AnalyticsModal>>> FilterData([FromForm] InputModal modal)
         {
@@ -39,31 +41,44 @@ namespace Analytics.Controllers
             if (modal.Id == 2)
             {
                 var jcCodes = result.GroupBy(element => element.JcCode)
-                  .Where(x => x.Count() > 1).SelectMany(g => g).ToList();
+                  .Where(x => x.Count() > 1).SelectMany(g => g)
+                  .ToList();
                 return jcCodes;
             }
             return result;
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<FilterMissingSequence>>> FilterMissingSequence([FromForm] InputModal modal)
+        public async Task<ActionResult<List<FilterMissingSequence>>> FilterMissingSequence()
         {
-            var result = await _context.Analytics
-                .WhereIf(modal.Id == 1, i => i.JcCode == null || String.IsNullOrEmpty(i.JcCode))
-            .ToListAsync();
-            // var jcCodes =new  List<AnalyticsModal>();
 
-           
-            //else if (modal.Id == 3)  
-            //{
-            //    for (int i = 0; i <=  ; i++)
-            //    {
+            var result =
+            await _context.Analytics.ToListAsync();
+            var missingSequence = new List<FilterMissingSequence>();
+            for (int i = 0; i < result.Count(); i++)
+            {
+                var jcCode = result[i].JcCode;
+                if (string.IsNullOrEmpty(jcCode)) continue;
+                var jcCodeNext = result[i + 1].JcCode;
+                if (string.IsNullOrEmpty(jcCodeNext)) continue;
 
-            //    }
-
-            //}  
-
-            return null;
+                int difference = 0;
+                int current = int.Parse(result[i].JcCode);
+                int next = int.Parse(result[i + 1].JcCode);
+                difference = next - current;
+                if (difference > 1)
+                {
+                    var missing = current + difference - 1;
+                    var message = result[i].JcCode + 1 + " to " + missing + " sequence is missing";
+                    var model = new FilterMissingSequence
+                    {
+                        Name = message,
+                        Id = i
+                    };
+                    missingSequence.Add(model);
+                }
+            }
+            return missingSequence;
         }
 
         [HttpGet("{id}")]
