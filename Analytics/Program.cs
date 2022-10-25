@@ -8,7 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IUploadFileService, UploadFileService>();
-builder.Services.AddCors(options => options.AddDefaultPolicy(builder => builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod()));
+builder.Services.AddCors(options => options.AddDefaultPolicy(builder => builder.WithOrigins(
+    "http://localhost:3000",
+    "https://testingtestingfaraz.000webhostapp.com"
+    ).AllowAnyHeader().AllowAnyMethod()));
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
