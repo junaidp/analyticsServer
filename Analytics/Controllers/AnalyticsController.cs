@@ -15,7 +15,9 @@ namespace Analytics.Controllers
     {
         public readonly IUploadFileService _uploadFileService;
         private readonly DataContext _context;
-        public AnalyticsController(IUploadFileService uploadFileDL, DataContext context)
+        public AnalyticsController(
+            IUploadFileService uploadFileDL,
+            DataContext context)
         {
             _uploadFileService = uploadFileDL;
             _context = context;
@@ -140,12 +142,15 @@ namespace Analytics.Controllers
             return Ok(await _context.Analytics.ToListAsync());
         }
 
-
         [Route("ReadFile")]
         [HttpPost]
         public async Task<ActionResult<List<AnalyticsModal>>> AddAnalytics([FromForm] UploadExcelFileRequest request)
         {
             // UploadExcelFileResponse response = new UploadExcelFileResponse();
+            if(!Directory.Exists("UploadFileFolder"))
+            {
+                Directory.CreateDirectory("UploadFileFolder");
+            }
             string Path = "UploadFileFolder/" + request.File.FileName;
             try
             {
@@ -165,6 +170,19 @@ namespace Analytics.Controllers
             }
         }
 
+        [HttpDelete]
+        public async Task<ActionResult<List<AnalyticsModal>>> Delete()
+        {
+            var Data = await _context.Analytics.ToListAsync();
+            if (Data == null)
+                return BadRequest("Data not found.");
+
+            _context.Analytics.RemoveRange(Data);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(await _context.Analytics.ToListAsync());
+        }
 
 
         internal List<AnalyticsModal> SaveAnalytics(AnalyticsModal analytics)
