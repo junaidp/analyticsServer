@@ -1,9 +1,10 @@
 ﻿using Analytics;
+using Analytics.viewModals;
 
 namespace Services
 {
     public interface IUploadFileService
     {
-        List<AnalyticsModal> UploadExcelFile(UploadExcelFileRequest request, string Path);
+        ParentViewModal UploadExcelFile(UploadExcelFileRequest request, string Path);
     }
 }

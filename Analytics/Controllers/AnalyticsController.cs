@@ -23,13 +23,18 @@ namespace Analytics.Controllers
             _context = context;
         }
 
-
-
         [HttpGet]
-        public async Task<ActionResult<List<AnalyticsModal>>> Get()
+        public async Task<ActionResult<ParentViewModal>> Get()
         {
+            var analyticsData = await _context.Analytics.ToListAsync();
+            var columns = await _context.Columns.ToListAsync();
 
-            return Ok(await _context.Analytics.ToListAsync());
+            var result = new ParentViewModal
+            {
+                AnalyticsData = analyticsData,
+                Columns = columns
+            };
+            return result;
         }
 
         [HttpPost]
@@ -144,10 +149,10 @@ namespace Analytics.Controllers
 
         [Route("ReadFile")]
         [HttpPost]
-        public async Task<ActionResult<List<AnalyticsModal>>> AddAnalytics([FromForm] UploadExcelFileRequest request)
+        public async Task<ActionResult<ParentViewModal>> AddAnalytics([FromForm] UploadExcelFileRequest request)
         {
             // UploadExcelFileResponse response = new UploadExcelFileResponse();
-            if(!Directory.Exists("UploadFileFolder"))
+            if (!Directory.Exists("UploadFileFolder"))
             {
                 Directory.CreateDirectory("UploadFileFolder");
             }
@@ -160,9 +165,10 @@ namespace Analytics.Controllers
                 }
 
                 var response = _uploadFileService.UploadExcelFile(request, Path);
-                await _context.Analytics.AddRangeAsync(response);
+                await _context.Analytics.AddRangeAsync(response.AnalyticsData);
+                await _context.Columns.AddRangeAsync(response.Columns);
                 await _context.SaveChangesAsync();
-                return Ok(await _context.Analytics.ToListAsync());
+                return Ok(await Get());
             }
             catch (Exception ex)
             {
@@ -173,11 +179,17 @@ namespace Analytics.Controllers
         [HttpDelete]
         public async Task<ActionResult<List<AnalyticsModal>>> Delete()
         {
+            var column = await _context.Columns.ToListAsync();
+            if (column == null)
+                return BadRequest("Data not found.");
+
+
             var Data = await _context.Analytics.ToListAsync();
             if (Data == null)
                 return BadRequest("Data not found.");
 
             _context.Analytics.RemoveRange(Data);
+            _context.Columns.RemoveRange(column);
 
             await _context.SaveChangesAsync();
 

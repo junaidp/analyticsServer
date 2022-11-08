@@ -7,5 +7,7 @@ namespace Analytics.Data
       public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
       public DbSet<AnalyticsModal> Analytics { get; set; }  
+
+      public DbSet<ColumnsModal> Columns { get; set; }
     }
 }

@@ -1,7 +1,10 @@
-﻿using Abp.UI;
+﻿using Abp.Extensions;
+using Abp.UI;
 using Analytics;
+using Analytics.viewModals;
 using ExcelDataReader;
 using System.Data;
+using System.Text;
 
 namespace Services
 {
@@ -15,11 +18,12 @@ namespace Services
         }
 
 
-        public List<AnalyticsModal> UploadExcelFile(UploadExcelFileRequest request, string Path)
+        public ParentViewModal UploadExcelFile(UploadExcelFileRequest request, string Path)
         {
 
             try
             {
+                var parentViewModal = new ParentViewModal();
                 UploadExcelFileResponse response = new UploadExcelFileResponse();
                 List<AnalyticsModal> parameters = new List<AnalyticsModal>();
                 response.IsSuccess = true;
@@ -40,6 +44,23 @@ namespace Services
                            UseHeaderRow = true
                        }
                    });
+
+                var col = new List<ColumnsModal>();
+
+                var columns = dataset.Tables[index: 0].Columns;
+
+               
+                for (int i = 0; i < columns.Count; i++)
+                {
+                    var c = new ColumnsModal();
+                    if (columns[i] != null)
+                    {
+                        c.Name = columns[i].ToString();
+                    }
+                    col.Add(c);
+                }
+
+
                 for (int i = 0; i < dataset.Tables[index: 0].Rows.Count; i++)
                 {
                     AnalyticsModal rows = new AnalyticsModal
@@ -65,7 +86,10 @@ namespace Services
 
                 stream.Close();
 
-                return parameters;
+                parentViewModal.Columns = col;
+                parentViewModal.AnalyticsData = parameters;
+
+                return parentViewModal;
 
 
             }

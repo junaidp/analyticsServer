@@ -7,7 +7,7 @@
     public class UploadExcelFileResponse
     {
         public bool IsSuccess { get; set; }
-        public string Message { get; set; }
+        public string? Message { get; set; }
     }
     public class AnalyticsModal
     {
@@ -29,4 +29,11 @@
         public string? Year { get; set; }
         public string? Dt { get; set; }
 
-    }}
+    }
+
+    public class ColumnsModal
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+}

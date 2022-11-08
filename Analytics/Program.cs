@@ -12,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IUploadFileService, UploadFileService>();
 builder.Services.AddCors(options => options.AddDefaultPolicy(builder => builder.WithOrigins(
     "http://localhost:3000",
+    "https://123analytic.000webhostapp.com",
     "https://testingtestingfaraz.000webhostapp.com"
     ).AllowAnyHeader().AllowAnyMethod()));
 
